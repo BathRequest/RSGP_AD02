@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,9 +14,8 @@ import java.util.List;
 
 public class CrearEmpleadosDat {
 
-    //Se usa el API nueva. Se usa como salida el directorio del usuario y la clase Paths para componer la ruta sin
-    //usar caracteres dependientes del SO ni usar "file.separator" que lo ahce muy poco legible
-    public static final Path path = Paths.get(System.getProperty("user.home"),"accesodatos-02","ejercicio-01","EMPLEADOS.DAT");
+    //A raiz del ejercicio 2, se refactoriza y se pone la ruta en una constante estática que pueda invocarse en
+    //cualquier parte y se cambie en un único punto.
 
     public static void main(String[] args) {
 
@@ -30,10 +28,10 @@ public class CrearEmpleadosDat {
         empleados.add(new Empleado(12, "Simplicio", "Calle Altair, 123, Barcelona", 11000.0f, 0.5f));
 
         try {
-            EscribirAlArchivo(path, empleados);
-            if (Files.exists(path)){
-                System.out.println("El archivo se ha creado con éxito en " + path.toString());
-                System.out.println("El tamaño total del archivo de salida es de " + Files.size(path) + " bytes.");
+            EscribirAlArchivo(Helper.RUTA_ARCHIVO_DAT, empleados);
+            if (Files.exists(Helper.RUTA_ARCHIVO_DAT)){
+                System.out.println("El archivo se ha creado con éxito en " + Helper.RUTA_ARCHIVO_DAT);
+                System.out.println("El tamaño total del archivo de salida es de " + Files.size(Helper.RUTA_ARCHIVO_DAT) + " bytes.");
             }
         } catch (IOException e) {
             System.err.println("Ha ocurrido algún error al manipular el archivo: " + e.getMessage());
