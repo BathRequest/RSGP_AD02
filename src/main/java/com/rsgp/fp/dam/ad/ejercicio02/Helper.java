@@ -5,5 +5,6 @@ import java.nio.file.Paths;
 
 public class Helper {
 
-    public static final Path RUTA_ARCHIVO_DAT = Paths.get(System.getProperty("user.home"),"accesodatos-02","ejercicio-01","EMPLEADOS.DAT");
+    public static final Path RUTA_ARCHIVO_DAT = Paths.get(System.getProperty("user.home"),"accesodatos-02","EMPLEADOS.DAT");
+    public static final Path RUTA_ARCHIVO_XML = Paths.get(System.getProperty("user.home"),"accesodatos-02","EMPLEADOS.XML");
 }
