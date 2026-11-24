@@ -9,12 +9,15 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
-import java.nio.file.Path;
+import java.io.InputStream;
 
 import org.xml.sax.SAXException;
 
 /*
  *  Lee el fichero libros.xml usando DOM y muestra por consola los datos de cada libro.
+ *
+ * IMPORTANTE: Este ejercicio es un proyecto gradle, por lo que busca el archivo libros.xml en el classpath.
+ * Para evitar indicarlo manualmente en java, lo más sencillo es ejecutarlo desde el IDE, ya que cada archivo es un punto de entrada en sí mismo (main).
  */
 
 public class LeerXmlDesdeDom {
@@ -22,7 +25,7 @@ public class LeerXmlDesdeDom {
     public static void main(String[] args) {
 
         try {
-            Document document = cargarDocumento(Helper.RUTA_LIBROS_XML);
+            Document document = cargarDocumento();
             mostrarLibros(document);
 
         } catch (ParserConfigurationException e) {
@@ -34,10 +37,11 @@ public class LeerXmlDesdeDom {
         }
     }
 
-    private static Document cargarDocumento(Path ruta) throws ParserConfigurationException, SAXException, IOException {
+    private static Document cargarDocumento() throws ParserConfigurationException, SAXException, IOException {
         DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-        Document document = documentBuilder.parse(ruta.toFile());
-        return document;
+        try (InputStream in = Helper.abrirLibrosXml()) {
+            return documentBuilder.parse(in);
+        }
     }
 
     private static void mostrarLibros(Document document) {
